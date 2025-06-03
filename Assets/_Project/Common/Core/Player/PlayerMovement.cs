@@ -28,4 +28,9 @@ namespace Project.Core.Player
         private void Move() =>
             _characterController.Move(_inputModel.Axis * _movementSpeed * deltaTime);
     }
+
+    public class PlayerPositionContoller
+    {
+
+    }
 }

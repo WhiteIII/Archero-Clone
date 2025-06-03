@@ -1,4 +1,4 @@
-namespace Project.Core
+namespace Project.Core.Services
 {
     public interface IActivatedAndDeactivatedObject
     {
