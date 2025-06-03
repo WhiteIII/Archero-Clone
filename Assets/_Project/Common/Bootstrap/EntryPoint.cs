@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class EntryPoint : MonoBehaviour
+namespace Project.Bootstrap
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class EntryPoint
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    
     }
 }
