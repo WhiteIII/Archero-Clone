@@ -1,5 +1,4 @@
 using Project.Core.InputController;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using static UnityEngine.Time;
 
