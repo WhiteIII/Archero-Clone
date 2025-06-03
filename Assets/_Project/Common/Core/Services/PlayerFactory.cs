@@ -13,13 +13,26 @@ namespace Project.Core.Services
 
         public PlayerFactoryData Create()
         {
+            PlayerComponents playerComponents;
             GameObject playerGameObject = GameObject.Instantiate(_playerPrefab);
+            GameObject.DontDestroyOnLoad(playerGameObject);
+            playerGameObject.transform.SetParent(null);
+            playerComponents = playerGameObject.GetComponentInChildren<PlayerComponents>();
 
             return new PlayerFactoryData
             {
                 PlayerGameObject = playerGameObject,
                 PlayerMovement = playerGameObject.GetComponentInChildren<PlayerMovement>(),
                 InputController = playerGameObject.GetComponentInChildren<BaseInputController>(),
+                PlayerStateController = new PlayerStateController(
+                    playerGameObject.GetComponentInChildren<BaseInputController>(),
+                    playerGameObject,
+                    true,
+                    true),
+                PlayerPositionController = new PlayerPositionController(
+                    playerGameObject.transform,
+                    playerComponents.CharacterController),
+                PlayerCameraPositionHandler = new PlayerCameraPositionHandler(playerComponents.CameraPointTransform)
             };
         }
     }
@@ -29,5 +42,8 @@ namespace Project.Core.Services
         public GameObject PlayerGameObject;
         public PlayerMovement PlayerMovement;
         public BaseInputController InputController;
+        public PlayerStateController PlayerStateController;
+        public IPlayerPositionController PlayerPositionController;
+        public IPlayerCameraPositionHandler PlayerCameraPositionHandler;
     }
 }

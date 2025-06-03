@@ -2,6 +2,7 @@ using Zenject;
 using UnityEngine;
 using Project.Configs;
 using Project.Bootstrap;
+using Project.Core.Services;
 
 namespace Project.Installers
 {
@@ -13,12 +14,10 @@ namespace Project.Installers
         
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<EntryPoint>().WithArguments(
-                new PlayerEntryPointData 
-                { 
-                    PlayerData = _playerData,
-                    PlayerPrefab = _playerPrefab
-                });
+            Container.Bind<PlayerFactory>().AsSingle().WithArguments(_playerPrefab);
+            Container.Bind<PlayerData>().FromInstance(_playerData).AsSingle();
+
+            Container.BindInterfacesTo<EntryPoint>().AsSingle();
         }
     }
 }

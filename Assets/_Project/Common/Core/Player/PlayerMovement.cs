@@ -1,4 +1,5 @@
 using Project.Core.InputController;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using static UnityEngine.Time;
 
@@ -7,6 +8,7 @@ namespace Project.Core.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private CharacterController _characterController;
+        [SerializeField] private Transform _playerTransform;
 
         private IInputModel _inputModel;
         private float _movementSpeed;
@@ -26,11 +28,10 @@ namespace Project.Core.Player
             _movementSpeed = movementSpeed;
 
         private void Move() =>
-            _characterController.Move(_inputModel.Axis * _movementSpeed * deltaTime);
-    }
-
-    public class PlayerPositionContoller
-    {
-
+            _characterController.Move(
+                (_playerTransform.right * _inputModel.Axis.x
+                + _playerTransform.forward * _inputModel.Axis.y)
+                * _movementSpeed
+                * deltaTime);
     }
 }
