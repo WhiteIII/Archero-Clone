@@ -1,9 +1,9 @@
 ﻿namespace Project.Core.Services
 {
-    public interface IObjectPool<TObject, TData>
+    public interface IObjectPool<T>
     {
-        TObject Get(TData data);
-        void Release(TObject poolableObject);
-        void Destroy(TObject poolableObject);
+        T Get();
+        void Release(T poolableObject);
+        void Destroy(T poolableObject);
     }
 }

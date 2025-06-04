@@ -6,6 +6,6 @@ namespace Project.Configs
     public class PlayerData : ScriptableObject
     {
         [field: SerializeField] public float Speed { get; private set; } = 10f;
-        [field: SerializeField] public Vector3 GameplaySpawnPointPosition { get; private set; }
+        [field: SerializeField] public Vector3 GameplaySpawnPointPosition { get; private set; } 
     }
 }

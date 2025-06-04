@@ -5,7 +5,10 @@ using UnityEngine;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class AttackController : MonoBehaviour, IInitializable<IRepository<IAttackableEnemy>>
+    public class AttackController : 
+        MonoBehaviour, 
+        IAttackController, 
+        IInitializable<IRepository<IAttackableEnemy>>
     {
         public event Action OnTriggerEntered;
         public event Action OnTriggerExited;
@@ -44,5 +47,11 @@ namespace Project.Core.Player.AttackSystem
 
             OnTriggerExited?.Invoke();
         }
+    }
+
+    public interface IAttackController
+    {
+        event Action OnTriggerEntered;
+        event Action OnTriggerExited;
     }
 }
