@@ -4,4 +4,9 @@
     {
         T Create();
     }
+
+    public interface IFactory<TObject, TData>
+    {
+        TObject Create(TData data);
+    }
 }

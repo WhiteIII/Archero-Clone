@@ -7,12 +7,12 @@ namespace Project.Core.Player.AttackSystem
     public class ArrowObjectPool : BaseObjectPool<ArrowData>
     {
         private readonly IRepository<IUpdateable> _gameBehavior;
-        private readonly IFactory<ArrowData> _arrowFactory;
+        private readonly IFactory<ArrowData, IObjectPool<ArrowData>> _arrowFactory;
         
         public ArrowObjectPool(
             int poolMaxSize, 
             IRepository<IUpdateable> gameBehavior,
-            IFactory<ArrowData> arrowFactory) : base(poolMaxSize) 
+            IFactory<ArrowData, IObjectPool<ArrowData>> arrowFactory) : base(poolMaxSize) 
         { 
             _gameBehavior = gameBehavior;
             _arrowFactory = arrowFactory;
@@ -28,7 +28,7 @@ namespace Project.Core.Player.AttackSystem
             ReleaseFromPool(poolableObject);
 
         protected override ArrowData OnCreate() =>
-            _arrowFactory.Create();
+            _arrowFactory.Create(this);
 
         protected override void OnDestroy(ArrowData poolableObject) =>
             Destroy(poolableObject);

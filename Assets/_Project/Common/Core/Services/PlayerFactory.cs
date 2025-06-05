@@ -24,7 +24,7 @@ namespace Project.Core.Services
                 PlayerGameObject = playerGameObject,
                 PlayerMovement = playerGameObject.GetComponentInChildren<PlayerMovement>(),
                 InputController = playerGameObject.GetComponentInChildren<BaseInputController>(),
-                PlayerStateController = new PlayerStateController(
+                PlayerStateController = new PlayerActiveController(
                     playerGameObject.GetComponentInChildren<BaseInputController>(),
                     playerGameObject,
                     true,
@@ -42,7 +42,7 @@ namespace Project.Core.Services
         public GameObject PlayerGameObject;
         public PlayerMovement PlayerMovement;
         public BaseInputController InputController;
-        public PlayerStateController PlayerStateController;
+        public PlayerActiveController PlayerStateController;
         public IPlayerPositionController PlayerPositionController;
         public IPlayerCameraPositionHandler PlayerCameraPositionHandler;
     }

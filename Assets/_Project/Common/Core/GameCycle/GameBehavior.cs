@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using Project.Core.Services;
 using UnityEngine;
+using Zenject;
 
 namespace Project.Core.GameCycle
 {
-    public class GameBehavior : MonoBehaviour, IUpdatingController, IRepository<IUpdateable>
+    public class GameBehavior : 
+        ITickable, 
+        IUpdatingController, 
+        IRepository<IUpdateable>
     {
         private readonly List<IUpdateable> _updateableObjects = new();
 
@@ -22,7 +26,7 @@ namespace Project.Core.GameCycle
         public void Remove(IUpdateable updateableObject) =>
             _updateableObjects.Remove(updateableObject);
 
-        private void Update()
+        public void Tick()
         {
             if (_isUpdating == false)
                 return;

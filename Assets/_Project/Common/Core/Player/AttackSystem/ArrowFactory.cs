@@ -3,31 +3,40 @@ using UnityEngine;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class ArrowFactory : IFactory<ArrowData>, ISetablePrefab
+    public class ArrowFactory : IFactory<ArrowData, IObjectPool<ArrowData>>, ISetablePrefab
     {
+        private readonly IArrowStats _arrowStats;
+        
         private GameObject _currentArrowPrefab;
+
+        public ArrowFactory(IArrowStats arrowStats) =>
+            _arrowStats = arrowStats;
 
         public void SetPrefab(GameObject arrowPrefab) =>
             _currentArrowPrefab = arrowPrefab;
         
-        public ArrowData Create()
+        public ArrowData Create(IObjectPool<ArrowData> arrowObjectPool)
         {
-            GameObject arrowGameObject = GameObject.Instantiate(_currentArrowPrefab);
+            ArrowData arrowData = new();
 
-            return new ArrowData
-            {
-                ArrowGameObject = arrowGameObject,
-                Rigidbody = arrowGameObject.GetComponent<Rigidbody>(),
-                ArrowMovement = new ArrowMovement(arrowGameObject.GetComponent<Rigidbody>())
-            };
+            arrowData.ArrowGameObject = GameObject.Instantiate(_currentArrowPrefab);
+            arrowData.Rigidbody = arrowData.ArrowGameObject.GetComponent<Rigidbody>();
+            arrowData.ArrowMovement = new ArrowMovement(arrowData.Rigidbody);
+            arrowData.ArrowActor = new BaseArrowActor(
+                arrowObjectPool, 
+                _arrowStats, 
+                arrowData, 
+                arrowData.ArrowGameObject.GetComponentInChildren<IArrowTargetHandler>());
+
+            return arrowData;
         }
     }
 
     public class AttackSystemFactory : IFactory<AttackSystemFactoryData>
     {
-        public readonly AttackController _attackController;
+        public readonly IAttackController _attackController;
 
-        public AttackSystemFactory(AttackController attackController) =>
+        public AttackSystemFactory(IAttackController attackController) =>
             _attackController = attackController;
 
         public AttackSystemFactoryData Create()

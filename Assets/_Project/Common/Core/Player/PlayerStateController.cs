@@ -1,64 +1,30 @@
 ﻿using Project.Core.Services;
-using Unity.VisualScripting;
-using UnityEngine;
 
 namespace Project.Core.Player
 {
-    public class PlayerStateController : IInitializable
+    public class PlayerStateController
     {
-        private readonly IActivatedAndDeactivatedObject _playerInput;
-        private readonly GameObject _playerGameObject;
-
-        public bool IsActive { get; private set; } = false;
-        public bool InputMovementActive { get; private set; } = false;
+        private readonly IActivatedAndDeactivatedObject _shootingController;
+        private readonly IActivatedAndDeactivatedObject _baseInputController;
 
         public PlayerStateController(
-            IActivatedAndDeactivatedObject playerInput,
-            GameObject playerGameObject,
-            bool isActive,
-            bool inputMovementActive)
+            IActivatedAndDeactivatedObject shootingController, 
+            IActivatedAndDeactivatedObject baseInputController)
         {
-            _playerInput = playerInput;
-            _playerGameObject = playerGameObject;
-            IsActive = isActive;
-            InputMovementActive = inputMovementActive;
+            _shootingController = shootingController;
+            _baseInputController = baseInputController;
         }
 
-        public void Initialize()
+        public void Kill()
         {
-            if (InputMovementActive)
-                _playerInput.Activate();
-            else
-                _playerInput.Deactivate();
-
-            if (IsActive)
-                _playerGameObject.SetActive(true);
-            else
-                _playerGameObject.SetActive(false);
+            _shootingController.Deactivate();
+            _baseInputController.Deactivate();
         }
 
-        public void ActivateMoveInput()
+        public void Revive()
         {
-            _playerInput.Activate();
-            InputMovementActive = true;
-        }
-
-        public void DeactivateMoveInput()
-        {
-            _playerInput.Deactivate();
-            InputMovementActive = false;
-        }
-
-        public void ActivateGameObject()
-        {
-            IsActive = true;
-            _playerGameObject.SetActive(true);
-        }
-
-        public void DeactivateGameObject()
-        {
-            IsActive = true;
-            _playerGameObject.SetActive(false);
+            _shootingController.Activate();
+            _baseInputController.Activate();
         }
     }
 }

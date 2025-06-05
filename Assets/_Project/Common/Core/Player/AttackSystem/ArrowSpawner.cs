@@ -1,5 +1,4 @@
-﻿using Project.Configs;
-using Project.Core.Enemy;
+﻿using Project.Core.Enemy;
 using Project.Core.Services;
 using System;
 using UnityEngine;
@@ -7,12 +6,12 @@ using Zenject;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class ArrowSpawner : IInitializable, IDisposable
+    public class ArrowSpawner : IArrowSpawner, IInitializable, IDisposable
     {
         private readonly IAttackModel _attackModel;
         private readonly IAttackController _attackController;
         private readonly IObjectPool<ArrowData> _arrowPool;
-        private readonly ArrowStats _arrowStats;
+        private readonly IArrowStats _arrowStats;
         private readonly Transform _playerTransform;
 
         private Vector3 _cuttentTargetPosition;
@@ -21,7 +20,7 @@ namespace Project.Core.Player.AttackSystem
             IAttackModel attackModel, 
             IAttackController attackController, 
             IObjectPool<ArrowData> arrowPool, 
-            ArrowStats arrowStats,
+            IArrowStats arrowStats,
             Transform playerTransform)
         {
             _attackModel = attackModel;
@@ -62,15 +61,5 @@ namespace Project.Core.Player.AttackSystem
                 }
             }
         }
-    }
-
-    public class ArrowSpawnerController
-    {
-        public readonly PlayerData _playerData;
-
-        public ArrowSpawnerController(PlayerData playerData) =>
-            _playerData = playerData;
-        
-
     }
 }

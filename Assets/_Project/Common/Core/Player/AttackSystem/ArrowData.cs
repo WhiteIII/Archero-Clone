@@ -7,5 +7,6 @@ namespace Project.Core.Player.AttackSystem
         public GameObject ArrowGameObject;
         public Rigidbody Rigidbody;
         public ArrowMovement ArrowMovement;
+        public BaseArrowActor ArrowActor;
     }
 }
