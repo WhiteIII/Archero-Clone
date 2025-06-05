@@ -1,8 +1,6 @@
 ﻿using Project.Core.Services;
 using Zenject;
 using UnityEngine;
-using Project.Core.InputController;
-using Project.Core.Player.AttackSystem;
 
 namespace Project.Core.Player
 {
@@ -61,45 +59,6 @@ namespace Project.Core.Player
         {
             IsActive = true;
             _playerGameObject.SetActive(false);
-        }
-    }
-
-    public class ShootingController : ITickable, IActivatedAndDeactivatedObject
-    {
-        private readonly IInputModel _inputModel;
-        private readonly IArrowSpawnerController _arrowSpawnerController;
-
-        private bool _isActive = false;
-
-        public ShootingController(
-            IInputModel inputModel,
-            IArrowSpawnerController arrowSpawnerController)
-        {
-            _inputModel = inputModel;
-            _arrowSpawnerController = arrowSpawnerController;
-        }
-
-        public void Activate() =>
-            _isActive = true;
-
-        public void Deactivate() => 
-            _isActive = false;
-        
-        public void Tick()
-        {
-            if (_isActive == false)
-                return;
-            
-            if (_inputModel.Axis.x > 0 || _inputModel.Axis.y > 0)
-            {
-                if (_arrowSpawnerController.IsActive == true)
-                    _arrowSpawnerController.StopShooting();
-            }
-            else
-            {
-                if (_arrowSpawnerController.IsActive == false)
-                    _arrowSpawnerController.StartShooting();
-            }
         }
     }
 }

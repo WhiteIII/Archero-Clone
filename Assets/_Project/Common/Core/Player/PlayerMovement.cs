@@ -1,4 +1,5 @@
 using Project.Core.InputController;
+using Project.Core.Player.AttackSystem;
 using UnityEngine;
 using static UnityEngine.Time;
 
@@ -10,27 +11,24 @@ namespace Project.Core.Player
         [SerializeField] private Transform _playerTransform;
 
         private IInputModel _inputModel;
-        private float _movementSpeed;
+        private IPlayerStats _playerStats;
 
         public void Initialize(
             IInputModel inputModel,
-            float movementSpeed)
+            IPlayerStats playerStats)
         {
             _inputModel = inputModel;
-            _movementSpeed = movementSpeed;
+            _playerStats = playerStats;
         }
 
         private void FixedUpdate() =>
             Move();
 
-        public void SetSpeed(float movementSpeed) =>
-            _movementSpeed = movementSpeed;
-
         private void Move() =>
             _characterController.Move(
                 (_playerTransform.right * _inputModel.Axis.x
                 + _playerTransform.forward * _inputModel.Axis.y)
-                * _movementSpeed
+                * _playerStats.MovementSpeed
                 * deltaTime);
     }
 }

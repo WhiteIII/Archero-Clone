@@ -35,7 +35,10 @@ namespace Project.Core.Player.AttackSystem
             if (target is Wall _ || target is Obstacle _)
                 ReleaseArrow();
             else if (target is IHealth health)
+            {
                 DealDamage(health);
+                ReleaseArrow();
+            }
         }
 
         protected void DealDamage(IHealth health) =>

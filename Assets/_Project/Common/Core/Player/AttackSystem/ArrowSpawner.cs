@@ -13,6 +13,7 @@ namespace Project.Core.Player.AttackSystem
         private readonly IObjectPool<ArrowData> _arrowPool;
         private readonly IArrowStats _arrowStats;
         private readonly Transform _playerTransform;
+        private readonly Transform _spawnPoint;
 
         private Vector3 _cuttentTargetPosition;
 
@@ -21,13 +22,15 @@ namespace Project.Core.Player.AttackSystem
             IAttackController attackController, 
             IObjectPool<ArrowData> arrowPool, 
             IArrowStats arrowStats,
-            Transform playerTransform)
+            Transform playerTransform,
+            Transform arrowSpawnPoint)
         {
             _attackModel = attackModel;
             _attackController = attackController;
             _arrowPool = arrowPool;
             _arrowStats = arrowStats;
             _playerTransform = playerTransform;
+            _spawnPoint = arrowSpawnPoint;
         }
         
         public void Initialize()
@@ -45,6 +48,7 @@ namespace Project.Core.Player.AttackSystem
         public void Shoot()
         {
             ArrowData arrowData = _arrowPool.Get();
+            arrowData.ArrowGameObject.transform.position = _spawnPoint.position;
             arrowData.ArrowMovement.SetDuration(_playerTransform.position - _cuttentTargetPosition);
             arrowData.ArrowMovement.SetSpeed(_arrowStats.Speed);
         }

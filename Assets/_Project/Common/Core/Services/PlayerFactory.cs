@@ -1,6 +1,8 @@
 using Project.Core.Player;
 using Project.Core.InputController;
 using UnityEngine;
+using Project.Core.Player.AttackSystem;
+using Project.Core.Enemy;
 
 namespace Project.Core.Services
 {
@@ -32,7 +34,10 @@ namespace Project.Core.Services
                 PlayerPositionController = new PlayerPositionController(
                     playerGameObject.transform,
                     playerComponents.CharacterController),
-                PlayerCameraPositionHandler = new PlayerCameraPositionHandler(playerComponents.CameraPointTransform)
+                PlayerCameraPositionHandler = new PlayerCameraPositionHandler(playerComponents.CameraPointTransform),
+                AttackController = playerComponents.AttackController,
+                ArrowSpawnPoint = playerComponents.ArrowSpawnPoint,
+                AttackControllerInitialize = playerComponents.AttackController
             };
         }
     }
@@ -43,7 +48,10 @@ namespace Project.Core.Services
         public PlayerMovement PlayerMovement;
         public BaseInputController InputController;
         public PlayerActiveController PlayerStateController;
+        public IAttackController AttackController;
         public IPlayerPositionController PlayerPositionController;
         public IPlayerCameraPositionHandler PlayerCameraPositionHandler;
+        public IInitializable<IRepository<IAttackableEnemy>> AttackControllerInitialize;
+        public Transform ArrowSpawnPoint;
     }
 }

@@ -18,8 +18,12 @@ namespace Project.Core.Player.AttackSystem
             _arrowFactory = arrowFactory;
         }
 
-        public override void Destroy(ArrowData poolableObject) =>
+        public override void Destroy(ArrowData poolableObject)
+        {
+            poolableObject.ArrowActor.Dispose();
+            Destroy(poolableObject);
             GameObject.Destroy(poolableObject.ArrowGameObject);
+        }
 
         public override ArrowData Get() =>
             GetFromPool();
@@ -27,8 +31,12 @@ namespace Project.Core.Player.AttackSystem
         public override void Release(ArrowData poolableObject) =>
             ReleaseFromPool(poolableObject);
 
-        protected override ArrowData OnCreate() =>
-            _arrowFactory.Create(this);
+        protected override ArrowData OnCreate()
+        {
+            ArrowData arrowData = _arrowFactory.Create(this);
+            arrowData.ArrowActor.Initialize();
+            return arrowData;
+        }
 
         protected override void OnDestroy(ArrowData poolableObject) =>
             Destroy(poolableObject);

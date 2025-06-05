@@ -8,5 +8,6 @@ namespace Project.Core.Player
         [field: SerializeField] public Transform CameraPointTransform { get; private set; }
         [field: SerializeField] public CharacterController CharacterController { get; private set; }
         [field: SerializeField] public AttackController AttackController { get; private set; }
+        [field: SerializeField] public Transform ArrowSpawnPoint { get; private set; }
     }
 }

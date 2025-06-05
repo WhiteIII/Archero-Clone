@@ -76,3 +76,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 180179203770564419, guid: f4f189db74cb10242abf610b11041aff, type: 3}
   _playerData: {fileID: 11400000, guid: 995c3de9c35f4cf4abefdf71ce9e199c, type: 2}
+  _arrowStatsData: {fileID: 11400000, guid: 39b983a2bf4ab7142892eba94326ce12, type: 2}
+  _arrowDefualPrefab: {fileID: 90835932631925748, guid: 80a105d8b4da4d04386e5d7744336efe, type: 3}

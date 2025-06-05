@@ -9,8 +9,13 @@ namespace Project.Core.Player.AttackSystem
         
         private GameObject _currentArrowPrefab;
 
-        public ArrowFactory(IArrowStats arrowStats) =>
+        public ArrowFactory(
+            IArrowStats arrowStats,
+            GameObject arrowDefualtPrefab)
+        {
             _arrowStats = arrowStats;
+            _currentArrowPrefab = arrowDefualtPrefab;
+        }
 
         public void SetPrefab(GameObject arrowPrefab) =>
             _currentArrowPrefab = arrowPrefab;
@@ -30,24 +35,5 @@ namespace Project.Core.Player.AttackSystem
 
             return arrowData;
         }
-    }
-
-    public class AttackSystemFactory : IFactory<AttackSystemFactoryData>
-    {
-        public readonly IAttackController _attackController;
-
-        public AttackSystemFactory(IAttackController attackController) =>
-            _attackController = attackController;
-
-        public AttackSystemFactoryData Create()
-        {
-            return new AttackSystemFactoryData();
-        }
-    }
-
-    public struct AttackSystemFactoryData
-    {
-        public AttackModel Model;
-        //public 
     }
 }
