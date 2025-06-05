@@ -29,20 +29,22 @@ namespace Project.Core.Player
         public void Deactivate() => 
             _isActive = false;
 
-        public void Tick()
+        public async void Tick()
         {
             if (_isActive == false || _attackModel.AttackableEnemies.Count == 0)
+            {
+                _arrowSpawnerController.StopShooting();
                 return;
+            }
             
             if (_inputModel.Axis.x > 0 || _inputModel.Axis.y > 0)
             {
-                if (_arrowSpawnerController.IsActive == true)
-                    _arrowSpawnerController.StopShooting();
+                _arrowSpawnerController.StopShooting();
             }
             else
             {
                 if (_arrowSpawnerController.IsActive == false)
-                    _arrowSpawnerController.StartShooting();
+                    await _arrowSpawnerController.StartShooting();
             }
         }
     }

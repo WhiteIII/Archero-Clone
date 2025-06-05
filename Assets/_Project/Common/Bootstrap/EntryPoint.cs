@@ -1,3 +1,4 @@
+using System;
 using Project.Configs;
 using Project.Core.GameCycle;
 using Project.Core.InputController;
@@ -8,7 +9,7 @@ using Zenject;
 
 namespace Project.Bootstrap
 {
-    public class EntryPoint : IInitializable
+    public class EntryPoint : IInitializable, IDisposable
     {
         private readonly PlayerData _playerData;
         private readonly PlayerFactory _playerFactory;
@@ -18,6 +19,8 @@ namespace Project.Bootstrap
         private readonly IInitializable<(IInputModel, IArrowSpawnerController, IAttackModel)> _shootingControllerInitilize;
         private readonly IShootingController _shootingController;
         private readonly GameBehavior _gameBehavior;
+        
+        private IDisposable _arrowSpawnerDispose;
 
         public EntryPoint(
             PlayerFactory playerFactory, 
@@ -38,11 +41,16 @@ namespace Project.Bootstrap
             _shootingController = shootingController;
             _gameBehavior = gameBehavior;
         }
-
+        
         public void Initialize()
         {
             CreatePlayer();
             _gameBehavior.EnableUpdating();
+        }
+
+        public void Dispose()
+        {
+            _arrowSpawnerDispose.Dispose();
         }
 
         private void CreatePlayer()
@@ -69,6 +77,7 @@ namespace Project.Bootstrap
                     InputModelController = factoryInputData.InputModelController,
                     Inputs = factoryInputData.Inputs,
                 });
+            _arrowSpawnerDispose = attackSystemFactoryData.ArrowSpawnerDispose;
             playerFactoryData.PlayerMovement.Initialize(factoryInputData.InputModel, _playerStats);
             playerFactoryData.PlayerStateController.Initialize();
             playerFactoryData.PlayerPositionController.SetOnPosition(_playerData.GameplaySpawnPointPosition);
@@ -78,6 +87,7 @@ namespace Project.Bootstrap
                 attackSystemFactoryData.Model));
             _shootingController.Activate();
             playerFactoryData.AttackControllerInitialize.Initialize(attackSystemFactoryData.ModelRepository);
+            attackSystemFactoryData.ArrowSpawnerInitialize.Initialize();
         }
     }
 }

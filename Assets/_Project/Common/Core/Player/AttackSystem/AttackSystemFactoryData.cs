@@ -1,5 +1,7 @@
-﻿using Project.Core.Enemy;
+﻿using System;
+using Project.Core.Enemy;
 using Project.Core.Services;
+using Zenject;
 
 namespace Project.Core.Player.AttackSystem
 {
@@ -9,5 +11,7 @@ namespace Project.Core.Player.AttackSystem
         public IArrowSpawner ArrowSpawner;
         public IArrowSpawnerController ArrowSpawnerController;
         public IRepository<IAttackableEnemy> ModelRepository;
+        public IInitializable ArrowSpawnerInitialize;
+        public IDisposable ArrowSpawnerDispose;
     }
 }

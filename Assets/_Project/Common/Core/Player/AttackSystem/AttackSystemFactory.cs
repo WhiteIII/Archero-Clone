@@ -32,19 +32,22 @@ namespace Project.Core.Player.AttackSystem
         {
             AttackSystemFactoryData data = new();
             AttackModel attackModel = new();
-
-            data.Model = attackModel;
-            data.ArrowSpawner = new ArrowSpawner(
-                data.Model, 
-                _attackController, 
+            ArrowSpawner arrowSpawner = new ArrowSpawner(
+                attackModel,
+                _attackController,
                 _arrowObjectPool,
                 _arrowStats,
                 _playerTransform,
                 _arrowSpawnPoint);
+
+            data.Model = attackModel;
+            data.ArrowSpawner = arrowSpawner;
             data.ArrowSpawnerController = new ArrowSpawnerController(
                 _playerStats,
                 data.ArrowSpawner);
             data.ModelRepository = attackModel;
+            data.ArrowSpawnerInitialize = arrowSpawner;
+            data.ArrowSpawnerDispose = arrowSpawner;
 
             return data;
         }

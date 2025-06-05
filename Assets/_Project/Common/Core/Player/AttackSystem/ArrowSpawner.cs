@@ -15,7 +15,7 @@ namespace Project.Core.Player.AttackSystem
         private readonly Transform _playerTransform;
         private readonly Transform _spawnPoint;
 
-        private Vector3 _cuttentTargetPosition;
+        private IAttackableEnemy _cuttentEnemy;
 
         public ArrowSpawner(
             IAttackModel attackModel, 
@@ -47,21 +47,35 @@ namespace Project.Core.Player.AttackSystem
 
         public void Shoot()
         {
+            if (_cuttentEnemy == null) 
+                return;
+
             ArrowData arrowData = _arrowPool.Get();
             arrowData.ArrowGameObject.transform.position = _spawnPoint.position;
-            arrowData.ArrowMovement.SetDuration(_playerTransform.position - _cuttentTargetPosition);
+            arrowData.ArrowMovement.SetDuration(
+                new Vector3(
+                    _cuttentEnemy.Position.x, 
+                    _spawnPoint.position.y,
+                    _cuttentEnemy.Position.z) - 
+                _spawnPoint.position);
             arrowData.ArrowMovement.SetSpeed(_arrowStats.Speed);
         }
 
         private void SetClosestEnemy()
         {
-            _cuttentTargetPosition = _attackModel.AttackableEnemies[0].Position;
+            if (_attackModel.AttackableEnemies.Count == 0)
+            {
+                _cuttentEnemy = null;
+                return;
+            }
+            
+            _cuttentEnemy = _attackModel.AttackableEnemies[0];
             foreach (IAttackableEnemy attackableEnemy in _attackModel.AttackableEnemies)
             {
-                if (Vector3.Distance(_cuttentTargetPosition, _playerTransform.position) 
+                if (Vector3.Distance(_cuttentEnemy.Position, _playerTransform.position) 
                     > Vector3.Distance(attackableEnemy.Position, _playerTransform.position))
                 {
-                    _cuttentTargetPosition = attackableEnemy.Position;
+                    _cuttentEnemy = attackableEnemy;
                 }
             }
         }
