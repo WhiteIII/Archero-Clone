@@ -5,6 +5,6 @@ namespace Project.Core.Player.AttackSystem
 {
     public interface IAttackModel
     {
-        public IReadOnlyList<IAttackableEnemy> AttackableEnemies { get; }
+        public IReadOnlyList<IEnemyWithHealth> AttackableEnemies { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Project.Core.Player.AttackSystem
         private readonly Transform _playerTransform;
         private readonly Transform _spawnPoint;
 
-        private IAttackableEnemy _cuttentEnemy;
+        private IEnemyWithHealth _cuttentEnemy;
 
         public ArrowSpawner(
             IAttackModel attackModel, 
@@ -70,7 +70,7 @@ namespace Project.Core.Player.AttackSystem
             }
             
             _cuttentEnemy = _attackModel.AttackableEnemies[0];
-            foreach (IAttackableEnemy attackableEnemy in _attackModel.AttackableEnemies)
+            foreach (IEnemyWithHealth attackableEnemy in _attackModel.AttackableEnemies)
             {
                 if (Vector3.Distance(_cuttentEnemy.Position, _playerTransform.position) 
                     > Vector3.Distance(attackableEnemy.Position, _playerTransform.position))

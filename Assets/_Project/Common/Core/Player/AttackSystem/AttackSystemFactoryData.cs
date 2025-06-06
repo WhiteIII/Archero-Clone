@@ -10,7 +10,7 @@ namespace Project.Core.Player.AttackSystem
         public IAttackModel Model;
         public IArrowSpawner ArrowSpawner;
         public IArrowSpawnerController ArrowSpawnerController;
-        public IRepository<IAttackableEnemy> ModelRepository;
+        public IRepository<IEnemyWithHealth> ModelRepository;
         public IInitializable ArrowSpawnerInitialize;
         public IDisposable ArrowSpawnerDispose;
     }

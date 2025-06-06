@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class AttackModel : IAttackModel, IRepository<IAttackableEnemy>
+    public class AttackModel : IAttackModel, IRepository<IEnemyWithHealth>
     {
-        private readonly List<IAttackableEnemy> _attackableEnemies = new();
+        private readonly List<IEnemyWithHealth> _attackableEnemies = new();
 
-        public IReadOnlyList<IAttackableEnemy> AttackableEnemies => _attackableEnemies;
+        public IReadOnlyList<IEnemyWithHealth> AttackableEnemies => _attackableEnemies;
 
-        public void Add(IAttackableEnemy attackableEnemy) =>
+        public void Add(IEnemyWithHealth attackableEnemy) =>
             _attackableEnemies.Add(attackableEnemy);
 
-        public void Remove(IAttackableEnemy attackableEnemy) =>
+        public void Remove(IEnemyWithHealth attackableEnemy) =>
             _attackableEnemies.Remove(attackableEnemy);
     }
 }

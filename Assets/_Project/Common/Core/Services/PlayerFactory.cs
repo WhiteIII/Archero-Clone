@@ -51,7 +51,7 @@ namespace Project.Core.Services
         public IAttackController AttackController;
         public IPlayerPositionController PlayerPositionController;
         public IPlayerCameraPositionHandler PlayerCameraPositionHandler;
-        public IInitializable<IRepository<IAttackableEnemy>> AttackControllerInitialize;
+        public IInitializable<IRepository<IEnemyWithHealth>> AttackControllerInitialize;
         public Transform ArrowSpawnPoint;
     }
 }
