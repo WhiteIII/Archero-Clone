@@ -1,10 +1,13 @@
 using System;
 using Project.Configs;
+using Project.Core.Enemy;
 using Project.Core.GameCycle;
 using Project.Core.InputController;
 using Project.Core.Player;
 using Project.Core.Player.AttackSystem;
+using Project.Core.RuleBasedAi;
 using Project.Core.Services;
+using UnityEngine;
 using Zenject;
 
 namespace Project.Bootstrap
@@ -19,7 +22,13 @@ namespace Project.Bootstrap
         private readonly IInitializable<(IInputModel, IArrowSpawnerController, IAttackModel)> _shootingControllerInitilize;
         private readonly IShootingController _shootingController;
         private readonly GameBehavior _gameBehavior;
-        
+        IInitializable<(Core.Services.IFactory<CreteadMeleeEnemyActorData>, 
+            IRepository<IUpdateable>,
+            IHealth,
+            IMeleeEnemyStats,
+            Transform)> _enemyTest;
+        private readonly EntryPointData _entryPointData;
+
         private IDisposable _arrowSpawnerDispose;
 
         public EntryPoint(
@@ -30,7 +39,13 @@ namespace Project.Bootstrap
             IObjectPool<ArrowData> arrowObjectPool,
             IInitializable<(IInputModel, IArrowSpawnerController, IAttackModel)> shootingControllerInitilize,
             IShootingController shootingController,
-            GameBehavior gameBehavior)
+            GameBehavior gameBehavior,
+            IInitializable<(Core.Services.IFactory<CreteadMeleeEnemyActorData>, 
+                IRepository<IUpdateable>, 
+                IHealth, 
+                IMeleeEnemyStats, 
+                Transform)> enemyTestInitialize,
+            EntryPointData entryPointData)
         {
             _playerData = playerData;
             _playerFactory = playerFactory;
@@ -40,6 +55,8 @@ namespace Project.Bootstrap
             _shootingControllerInitilize = shootingControllerInitilize;
             _shootingController = shootingController;
             _gameBehavior = gameBehavior;
+            _enemyTest = enemyTestInitialize;
+            _entryPointData = entryPointData;
         }
         
         public void Initialize()
@@ -57,7 +74,18 @@ namespace Project.Bootstrap
         {
             InputFactory inputFactory;
             AttackSystemFactory attackSystemFactory;
+            PlayerStateController playerStateController;
+            PlayerHeath playerHeath = new();
             
+            //
+            MeleeEnemyStats meleeEnemyStats = new();
+            meleeEnemyStats.SetMovementSpeed(10f);
+            meleeEnemyStats.SetHealth(60f);
+            meleeEnemyStats.SetAttackDistance(0.9f);
+            meleeEnemyStats.SetAttackCoolDown(2f);
+            meleeEnemyStats.SetDamage(10f);
+            //
+
             PlayerFactoryData playerFactoryData = _playerFactory.Create();
             inputFactory = new InputFactory(playerFactoryData.InputController);
             attackSystemFactory = new AttackSystemFactory(
@@ -77,6 +105,11 @@ namespace Project.Bootstrap
                     InputModelController = factoryInputData.InputModelController,
                     Inputs = factoryInputData.Inputs,
                 });
+
+            playerStateController = new PlayerStateController(
+                (IActivatedAndDeactivatedObject)_shootingController,
+                playerFactoryData.InputController);
+
             _arrowSpawnerDispose = attackSystemFactoryData.ArrowSpawnerDispose;
             playerFactoryData.PlayerMovement.Initialize(factoryInputData.InputModel, _playerStats);
             playerFactoryData.PlayerStateController.Initialize();
@@ -88,6 +121,20 @@ namespace Project.Bootstrap
             _shootingController.Activate();
             playerFactoryData.AttackControllerInitialize.Initialize(attackSystemFactoryData.ModelRepository);
             attackSystemFactoryData.ArrowSpawnerInitialize.Initialize();
+
+            _enemyTest.Initialize(new(
+                new MeleeEnemyActorFactory(
+                    new RuleBasedAiMeleeActorFactory(playerStateController),
+                    _entryPointData.MeleeEnemyPrefab),
+                _gameBehavior,
+                playerHeath,
+                meleeEnemyStats,
+                playerFactoryData.PlayerGameObject.transform));
         }
+    }
+
+    public struct EntryPointData
+    {
+        public GameObject MeleeEnemyPrefab;
     }
 }

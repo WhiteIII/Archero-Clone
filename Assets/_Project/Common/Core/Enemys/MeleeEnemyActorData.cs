@@ -1,12 +1,13 @@
-﻿using Project.Core.Services;
+﻿using Project.Core.GameCycle;
+using Project.Core.Services;
 using UnityEngine;
 
 namespace Project.Core.Enemy
 {
-    public struct MeleeEnemyActorData
+    public struct CreteadMeleeEnemyActorData
     {
         public GameObject MeleeEnemyGameObject;
-        public IAiActor AiActor;
+        public IUpdateable AiActor;
         public IInitializable<MeleeEnemyActorData> ActorInitilialize;
     }
 }

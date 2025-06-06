@@ -1,8 +1,9 @@
+using Project.Core.GameCycle;
 using Project.Core.Services;
 
 namespace Project.Core.RuleBasedAi
 {
-    public class RuleBasedAiActor : IAiActor
+    public class RuleBasedAiActor : IAiActor, IUpdateable
     {
         private readonly IRule[] _rules;
 

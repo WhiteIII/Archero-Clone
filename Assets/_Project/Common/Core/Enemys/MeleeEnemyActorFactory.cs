@@ -1,9 +1,10 @@
-﻿using Project.Core.Services;
+﻿using Project.Core.GameCycle;
+using Project.Core.Services;
 using UnityEngine;
 
 namespace Project.Core.Enemy
 {
-    public class MeleeEnemyActorFactory : IFactory<MeleeEnemyActorData>
+    public class MeleeEnemyActorFactory : IFactory<CreteadMeleeEnemyActorData>
     {
         private readonly IFactory<IAiActor, IEnemyActor> _aiActorFactory;
         private readonly GameObject _enemyPrefab;
@@ -16,13 +17,13 @@ namespace Project.Core.Enemy
             _enemyPrefab = enemyPrefab;
         }
 
-        public MeleeEnemyActorData Create()
+        public CreteadMeleeEnemyActorData Create()
         {
-            MeleeEnemyActorData data = new();
+            CreteadMeleeEnemyActorData data = new();
 
             data.MeleeEnemyGameObject = GameObject.Instantiate(_enemyPrefab);
             data.ActorInitilialize = data.MeleeEnemyGameObject.GetComponent<IInitializable<MeleeEnemyActorData>>();
-            data.AiActor = _aiActorFactory.Create(data.MeleeEnemyGameObject.GetComponent<IEnemyActor>());
+            data.AiActor = (IUpdateable)_aiActorFactory.Create(data.MeleeEnemyGameObject.GetComponent<IEnemyActor>());
 
             return data;
         }

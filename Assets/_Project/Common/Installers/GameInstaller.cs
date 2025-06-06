@@ -18,6 +18,9 @@ namespace Project.Installers
         [SerializeField] private DefaultArrowStatsData _arrowStatsData;
         [SerializeField] private GameObject _arrowDefualPrefab;
 
+        [Header("Enemy:")]
+        [SerializeField] private GameObject _meleeEnemyPrefab;
+
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameBehavior>().AsSingle();
@@ -29,8 +32,9 @@ namespace Project.Installers
             Container.BindInterfacesTo<ShootingController>().AsSingle();
             Container.Bind<PlayerFactory>().AsSingle().WithArguments(_playerPrefab);
             Container.Bind<PlayerData>().FromInstance(_playerData).AsSingle();
+            Container.BindInterfacesTo<EnemyTest>().AsSingle();
 
-            Container.BindInterfacesTo<EntryPoint>().AsSingle();
+            Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(new EntryPointData { MeleeEnemyPrefab = _meleeEnemyPrefab});
         }
     }
 }

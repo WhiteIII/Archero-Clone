@@ -37,7 +37,7 @@ namespace Project.Core.Services
                 PlayerCameraPositionHandler = new PlayerCameraPositionHandler(playerComponents.CameraPointTransform),
                 AttackController = playerComponents.AttackController,
                 ArrowSpawnPoint = playerComponents.ArrowSpawnPoint,
-                AttackControllerInitialize = playerComponents.AttackController
+                AttackControllerInitialize = playerComponents.AttackController,
             };
         }
     }

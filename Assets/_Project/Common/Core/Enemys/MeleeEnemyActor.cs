@@ -46,7 +46,7 @@ namespace Project.Core.Enemy
         public void MoveToPlayer()
         {
             _agent.isStopped = false;
-            _agent.Move(_playerTransform.position);
+            _agent.SetDestination(_playerTransform.position);
         }
 
         public void StopMoving() =>

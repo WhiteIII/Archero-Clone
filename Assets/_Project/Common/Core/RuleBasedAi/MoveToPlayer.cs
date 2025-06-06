@@ -3,12 +3,12 @@ using Project.Core.Player;
 
 namespace Project.Core.RuleBasedAi
 {
-    public class MoveToEnemy : IRule
+    public class MoveToPlayer : IRule
     {
         private readonly IEnemyActor _actor;
         private readonly IPlayerStateModel _playerStateModel;
 
-        public MoveToEnemy(IEnemyActor actor, IPlayerStateModel playerStateModel)
+        public MoveToPlayer(IEnemyActor actor, IPlayerStateModel playerStateModel)
         {
             _actor = actor;
             _playerStateModel = playerStateModel;

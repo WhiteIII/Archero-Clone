@@ -14,6 +14,6 @@ namespace Project.Core.RuleBasedAi
         public IAiActor Create(IEnemyActor enemyActor) =>
             new RuleBasedAiActor( 
                 new Attack(enemyActor, _playerStateModel),
-                new MoveToEnemy(enemyActor, _playerStateModel));
+                new MoveToPlayer(enemyActor, _playerStateModel));
     }
 }

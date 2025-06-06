@@ -78,3 +78,4 @@ MonoBehaviour:
   _playerData: {fileID: 11400000, guid: 995c3de9c35f4cf4abefdf71ce9e199c, type: 2}
   _arrowStatsData: {fileID: 11400000, guid: 39b983a2bf4ab7142892eba94326ce12, type: 2}
   _arrowDefualPrefab: {fileID: 90835932631925748, guid: 80a105d8b4da4d04386e5d7744336efe, type: 3}
+  _meleeEnemyPrefab: {fileID: 5469389104954415742, guid: 7d6d769e299b8034a8d79296e8b66f18, type: 3}
