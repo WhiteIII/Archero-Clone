@@ -15,6 +15,7 @@ namespace Project.Core.Player
         private IAttackModel _attackModel;
 
         private bool _isActive = false;
+        private bool _isShooting = false;
 
         public void Initialize((IInputModel, IArrowSpawnerController, IAttackModel) data)
         {
@@ -31,21 +32,14 @@ namespace Project.Core.Player
 
         public async void Tick()
         {
-            if (_isActive == false || _attackModel.AttackableEnemies.Count == 0)
+            if (_isActive == false || _attackModel.AttackableEnemies.Count == 0 || 
+                _inputModel.Axis.x > 0 || _inputModel.Axis.y > 0 || _isShooting)
             {
-                _arrowSpawnerController.StopShooting();
                 return;
             }
-            
-            if (_inputModel.Axis.x > 0 || _inputModel.Axis.y > 0)
-            {
-                _arrowSpawnerController.StopShooting();
-            }
-            else
-            {
-                if (_arrowSpawnerController.IsActive == false)
-                    await _arrowSpawnerController.StartShooting();
-            }
+            _isShooting = true;
+            await _arrowSpawnerController.StartShooting();
+            _isShooting = false;
         }
     }
 }
