@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DefaultArrowData
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 15
-  <Speed>k__BackingField: 15
+  <Speed>k__BackingField: 30

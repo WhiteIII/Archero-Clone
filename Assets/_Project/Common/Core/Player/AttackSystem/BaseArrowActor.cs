@@ -1,4 +1,5 @@
 ﻿using System;
+using Project.Core.Enemy;
 using Project.Core.Services;
 using Zenject;
 
@@ -34,7 +35,7 @@ namespace Project.Core.Player.AttackSystem
         {
             if (target is Wall _ || target is Obstacle _)
                 ReleaseArrow();
-            else if (target is IHealth health)
+            else if (target is EnemyHealth health)
             {
                 DealDamage(health);
                 ReleaseArrow();

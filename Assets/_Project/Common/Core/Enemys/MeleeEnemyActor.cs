@@ -14,10 +14,11 @@ namespace Project.Core.Enemy
     {
         public event Action<IEnemyWithHealth> OnDead;
 
+        [SerializeField] private EnemyMovement _enemyMovement;
+        
         private IHealth _playerHealth;
         private IMeleeEnemyStats _meleeEnemyStats;
         private Transform _playerTransform;
-        private NavMeshAgent _agent;
 
         public Vector3 Position => transform.position;
         public bool IsAlive { get; private set; } = true;
@@ -29,11 +30,8 @@ namespace Project.Core.Enemy
             _playerHealth = data.PlayerHealth;
             _meleeEnemyStats = data.EnemyStats;
             _playerTransform = data.PlayerTransform;
-            _agent.speed = _meleeEnemyStats.MovementSpeed;
+            _enemyMovement.Initilialize(data.EnemyStats);
         }
-
-        private void Awake() =>
-            _agent = GetComponent<NavMeshAgent>();
 
         public async void Attack()
         {
@@ -43,14 +41,11 @@ namespace Project.Core.Enemy
             AttackCoolDown = false;
         }
 
-        public void MoveToPlayer()
-        {
-            _agent.isStopped = false;
-            _agent.SetDestination(_playerTransform.position);
-        }
+        public void MoveToPlayer() =>
+            _enemyMovement.MoveTo(_playerTransform.position);
 
         public void StopMoving() =>
-            _agent.isStopped = true;
+            _enemyMovement.Stop();
     }
 
     public struct MeleeEnemyActorData
