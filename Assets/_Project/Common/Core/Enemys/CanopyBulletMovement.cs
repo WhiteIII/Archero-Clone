@@ -1,24 +1,24 @@
 ﻿using System;
-using Project.Core.GameCycle;
+using Project.Core.Player.AttackSystem;
 using UnityEngine;
 
 namespace Project.Core.Enemy
 {
-    public class CanopyBullet : IUpdateable
+    public class CanopyBulletMovement : IBulletMovement
     {
         public event Action OnEndFlying;
         
         private readonly AnimationCurve _animationCurve;
         private readonly Transform _bulletTransform;
         private readonly Rigidbody _bulletRigidbody;
-        private readonly float _flightDuration;
 
+        private float _flightDuration;
         private float _progress;
         private bool _isFlying;
         private Vector3 _currentTarget;
         private Vector3 _startPosition;
 
-        public CanopyBullet(
+        public CanopyBulletMovement(
             AnimationCurve animationCurve, 
             Transform bulletTransform, 
             Rigidbody bulletRigidbody, 
@@ -54,16 +54,15 @@ namespace Project.Core.Enemy
             }
         }
 
-        public void StartFly()
+        public void SetTarget(Vector3 target)
         {
             _isFlying = true;
             _progress = 0f;
+            _currentTarget = target;
+            _startPosition = _bulletTransform.position;
         }
 
-        public void SetTarget(Vector3 target) =>
-            _currentTarget = target;
-
-        public void SetStartPosition(Vector3 startPosition) => 
-            _startPosition = startPosition;
+        public void SetSpeed(float speed) =>
+            _flightDuration = speed;
     }
 }

@@ -4,50 +4,51 @@ using UnityEngine;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class ArrowObjectPool : BaseObjectPool<ArrowData>
+    public class BulletObjectPool<T> : BaseObjectPool<T>
+        where T : class, IBulletCreateData
     {
         private readonly IRepository<IUpdateable> _gameBehavior;
-        private readonly IFactory<ArrowData, IObjectPool<ArrowData>> _arrowFactory;
+        private readonly IFactory<T, IObjectPool<T>> _arrowFactory;
         
-        public ArrowObjectPool(
+        public BulletObjectPool(
             int poolMaxSize, 
             IRepository<IUpdateable> gameBehavior,
-            IFactory<ArrowData, IObjectPool<ArrowData>> arrowFactory) : base(poolMaxSize) 
+            IFactory<T, IObjectPool<T>> arrowFactory) : base(poolMaxSize) 
         { 
             _gameBehavior = gameBehavior;
             _arrowFactory = arrowFactory;
         }
 
-        public override void Destroy(ArrowData poolableObject)
+        public override void Destroy(T poolableObject)
         {
             poolableObject.ArrowActor.Dispose();
             Destroy(poolableObject);
             GameObject.Destroy(poolableObject.ArrowGameObject);
         }
 
-        public override ArrowData Get() =>
+        public override T Get() =>
             GetFromPool();
 
-        public override void Release(ArrowData poolableObject) =>
+        public override void Release(T poolableObject) =>
             ReleaseFromPool(poolableObject);
 
-        protected override ArrowData OnCreate()
+        protected override T OnCreate()
         {
-            ArrowData arrowData = _arrowFactory.Create(this);
+            T arrowData = _arrowFactory.Create(this);
             arrowData.ArrowActor.Initialize();
             return arrowData;
         }
 
-        protected override void OnDestroy(ArrowData poolableObject) =>
+        protected override void OnDestroy(T poolableObject) =>
             Destroy(poolableObject);
 
-        protected override void OnGet(ArrowData poolableObject)
+        protected override void OnGet(T poolableObject)
         {
             poolableObject.ArrowGameObject.SetActive(true);
             _gameBehavior.Add(poolableObject.ArrowMovement);
         }
 
-        protected override void OnRelease(ArrowData poolableObject)
+        protected override void OnRelease(T poolableObject)
         {
             _gameBehavior.Remove(poolableObject.ArrowMovement);
             poolableObject.ArrowGameObject.SetActive(false);

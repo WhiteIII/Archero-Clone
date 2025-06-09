@@ -1,10 +1,9 @@
-﻿using Project.Core.GameCycle;
-using UnityEngine;
+﻿using UnityEngine;
 using static UnityEngine.Time;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class ArrowMovement : IArrowMovement, IUpdateable
+    public class ArrowMovement : IBulletMovement
     {
         public readonly Rigidbody _rigidBody;
 
@@ -14,7 +13,7 @@ namespace Project.Core.Player.AttackSystem
         public ArrowMovement(Rigidbody rigidBody) =>
             _rigidBody = rigidBody;
 
-        public void SetDuration(Vector3 duration) =>
+        public void SetTarget(Vector3 duration) =>
             _duration = duration;
 
         public void SetSpeed(float speed) =>

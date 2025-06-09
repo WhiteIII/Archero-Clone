@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class ArrowTargetHandler : MonoBehaviour, IArrowTargetHandler
+    public class BulletTargetHandler : MonoBehaviour, IArrowTargetHandler
     {
         public event Action<ITarget> OnTouchedTarget;
 

@@ -1,11 +1,9 @@
-﻿using System;
-using Project.Core.Enemy;
+﻿using Project.Core.Enemy;
 using Project.Core.Services;
-using Zenject;
 
 namespace Project.Core.Player.AttackSystem
 {
-    public class BaseArrowActor : IInitializable, IDisposable
+    public class BaseArrowActor : IBulletActor
     {
         private readonly IObjectPool<ArrowData> _pool;
         private readonly IArrowStats _stats;

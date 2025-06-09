@@ -52,7 +52,7 @@ namespace Project.Core.Player.AttackSystem
 
             ArrowData arrowData = _arrowPool.Get();
             arrowData.ArrowGameObject.transform.position = _spawnPoint.position;
-            arrowData.ArrowMovement.SetDuration(
+            arrowData.ArrowMovement.SetTarget(
                 new Vector3(
                     _cuttentEnemy.Position.x, 
                     _spawnPoint.position.y,

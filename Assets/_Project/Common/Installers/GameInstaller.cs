@@ -27,7 +27,7 @@ namespace Project.Installers
             Container.BindInterfacesAndSelfTo<PlayerStats>().AsSingle();
             Container.BindInterfacesAndSelfTo<ArrowStats>().AsSingle();
             Container.BindInterfacesTo<ArrowFactory>().AsSingle().WithArguments(_arrowDefualPrefab);
-            Container.BindInterfacesTo<ArrowObjectPool>().AsSingle().WithArguments(_playerData.ArrowPoolMaxSize);
+            Container.BindInterfacesTo<BulletObjectPool<ArrowData>>().AsSingle().WithArguments(_playerData.ArrowPoolMaxSize);
             Container.BindInterfacesTo<UpgradeController>().AsSingle().WithArguments(_arrowStatsData);
             Container.BindInterfacesTo<ShootingController>().AsSingle();
             Container.Bind<PlayerFactory>().AsSingle().WithArguments(_playerPrefab);
