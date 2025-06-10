@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Project.Core.Enemy
 {
-    public struct CreteadMeleeEnemyActorData
+    public class CreteadMeleeEnemyActorData
     {
         public GameObject MeleeEnemyGameObject;
         public IUpdateable AiActor;

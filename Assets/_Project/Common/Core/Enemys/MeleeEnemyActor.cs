@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using NUnit.Framework.Constraints;
 using Project.Core.Services;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,7 +24,8 @@ namespace Project.Core.Enemy
         public Vector3 Position => transform.position;
         public bool IsAlive { get; private set; } = true;
         public bool AttackCoolDown { get; private set; } = false;
-        public bool CanAttack => Vector3.Distance(Position, _playerTransform.position) <= _meleeEnemyStats.AttackDistance;
+        public bool CanAttack => 
+            Vector3.Distance(Position, _playerTransform.position) <= _meleeEnemyStats.AttackDistance;
 
         public void Initialize(MeleeEnemyActorData data)
         {
