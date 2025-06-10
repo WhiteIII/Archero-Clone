@@ -13,13 +13,14 @@ namespace Project.Core.Enemy
         IEnemyActor, 
         IInitializable<MeleeEnemyActorData>
     {
-        public event Action<IEnemyWithHealth> OnDead;
+        public event Action<ICreatedActorData> OnDead;
 
         [SerializeField] private EnemyMovement _enemyMovement;
         
         private IHealth _playerHealth;
         private IMeleeEnemyStats _meleeEnemyStats;
         private Transform _playerTransform;
+        private CreatedMeleeEnemyActorData CreatedMeleeEnemyActorData;
 
         public Vector3 Position => transform.position;
         public bool IsAlive { get; private set; } = true;
@@ -55,5 +56,6 @@ namespace Project.Core.Enemy
         public IHealth PlayerHealth;
         public IMeleeEnemyStats EnemyStats;
         public Transform PlayerTransform;
+        public CreatedMeleeEnemyActorData CreatedMeleeEnemyActorData;
     }
 }

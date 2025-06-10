@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Project.Core.Enemy
 {
-    public class MeleeEnemyActorFactory : IFactory<CreteadMeleeEnemyActorData>
+    public class MeleeEnemyActorFactory : IFactory<CreatedMeleeEnemyActorData>
     {
         private readonly IFactory<IAiActor, IEnemyActor> _aiActorFactory;
         private readonly GameObject _enemyPrefab;
@@ -17,13 +17,14 @@ namespace Project.Core.Enemy
             _enemyPrefab = enemyPrefab;
         }
 
-        public CreteadMeleeEnemyActorData Create()
+        public CreatedMeleeEnemyActorData Create()
         {
-            CreteadMeleeEnemyActorData data = new();
+            CreatedMeleeEnemyActorData data = new();
 
             data.MeleeEnemyGameObject = GameObject.Instantiate(_enemyPrefab);
             data.ActorInitilialize = data.MeleeEnemyGameObject.GetComponent<IInitializable<MeleeEnemyActorData>>();
             data.AiActor = (IUpdateable)_aiActorFactory.Create(data.MeleeEnemyGameObject.GetComponent<IEnemyActor>());
+            data.EnemyActor = data.MeleeEnemyGameObject.GetComponent<IEnemyActor>();
 
             return data;
         }

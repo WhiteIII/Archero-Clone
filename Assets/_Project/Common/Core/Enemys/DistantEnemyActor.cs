@@ -11,7 +11,7 @@ namespace Project.Core.Enemy
         IEnemyActor,
         IInitializable<DistantEnemyActorData>
     {
-        public event Action<IEnemyWithHealth> OnDead;
+        public event Action<ICreatedActorData> OnDead;
 
         [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private Transform _arrowSpawnPoint;

@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Project.Core.Enemy
 {
-    public class CreatedMeleeEnemyActorData : ICreatedActorData
+    public class CreatedDistantEnemyActorData : ICreatedActorData
     {
-        public GameObject MeleeEnemyGameObject;
+        public GameObject DistantEnemyGameObject;
         public IUpdateable AiActor;
         public IEnemyActor EnemyActor;
-        public IInitializable<MeleeEnemyActorData> ActorInitilialize;
+        public IInitializable<DistantEnemyActorData> ActorInitilialize;
     }
 }

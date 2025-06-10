@@ -8,20 +8,20 @@ namespace Project.Core.Services
     public class EnemyTest : 
         ITickable, 
         IInitializable<(
-            IFactory<CreteadMeleeEnemyActorData>, 
+            IFactory<CreatedMeleeEnemyActorData>, 
             IRepository<IUpdateable>,
             IHealth,
             IMeleeEnemyStats,
             Transform)>
     {
-        private IFactory<CreteadMeleeEnemyActorData> _meleeEnemyFactory;
+        private IFactory<CreatedMeleeEnemyActorData> _meleeEnemyFactory;
         private IRepository<IUpdateable> _gameBehavior;
         private IHealth _playerHealth;
         private IMeleeEnemyStats _meleeEnemyStats;
         private Transform _playerTransform;
 
         public void Initialize((
-            IFactory<CreteadMeleeEnemyActorData>, 
+            IFactory<CreatedMeleeEnemyActorData>, 
             IRepository<IUpdateable>,
             IHealth,
             IMeleeEnemyStats,
@@ -38,7 +38,7 @@ namespace Project.Core.Services
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                CreteadMeleeEnemyActorData data = _meleeEnemyFactory.Create();
+                CreatedMeleeEnemyActorData data = _meleeEnemyFactory.Create();
 
                 data.ActorInitilialize.Initialize(new MeleeEnemyActorData { 
                     EnemyStats = _meleeEnemyStats,

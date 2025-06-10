@@ -22,7 +22,7 @@ namespace Project.Bootstrap
         private readonly IInitializable<(IInputModel, IArrowSpawnerController, IAttackModel)> _shootingControllerInitilize;
         private readonly IShootingController _shootingController;
         private readonly GameBehavior _gameBehavior;
-        IInitializable<(Core.Services.IFactory<CreteadMeleeEnemyActorData>, 
+        IInitializable<(Core.Services.IFactory<CreatedMeleeEnemyActorData>, 
             IRepository<IUpdateable>,
             IHealth,
             IMeleeEnemyStats,
@@ -40,7 +40,7 @@ namespace Project.Bootstrap
             IInitializable<(IInputModel, IArrowSpawnerController, IAttackModel)> shootingControllerInitilize,
             IShootingController shootingController,
             GameBehavior gameBehavior,
-            IInitializable<(Core.Services.IFactory<CreteadMeleeEnemyActorData>, 
+            IInitializable<(Core.Services.IFactory<CreatedMeleeEnemyActorData>, 
                 IRepository<IUpdateable>, 
                 IHealth, 
                 IMeleeEnemyStats, 
